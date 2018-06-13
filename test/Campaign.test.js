@@ -63,4 +63,16 @@ describe('Campaigns', () => {
       assert(err)
     }
   })
+
+  it('allows a manager to make a payment request', async () => {
+    const descriptionString = 'buy batteries'
+    await campaign.methods.createRequest(descriptionString, '100', accounts[2]).send({
+      from: accounts[0],
+      gas: '1000000'
+    })
+
+    const request = await campaign.methods.requests(0).call()
+
+    assert.equal(descriptionString, request.description)
+  })
 })
