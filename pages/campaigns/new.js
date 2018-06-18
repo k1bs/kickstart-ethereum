@@ -18,7 +18,7 @@ class CampaignNew extends Component {
   async onSubmit (event) {
     event.preventDefault()
 
-    this.setState({ loading: true })
+    this.setState({ loading: true, errorMessage: '' })
 
     try {
       const accounts = await web3.eth.getAccounts()
