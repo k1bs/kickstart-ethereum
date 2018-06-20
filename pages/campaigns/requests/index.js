@@ -10,6 +10,8 @@ class RequestIndex extends Component {
     const { address } = props.query
     const campaign = Campaign(address)
 
+    const approversCount = await campaign.methods.approversCount().call()
+
     const requestCount = await campaign.methods.getRequestsCount().call()
 
     const requests = await Promise.all(
@@ -18,12 +20,12 @@ class RequestIndex extends Component {
       })
     )
 
-    return { address, requests, requestCount }
+    return { address, requests, requestCount, approversCount }
   }
 
   renderRows () {
     return this.props.requests.map((elem, index) => {
-      return <RequestRow key={index} request={elem} address={this.props.address} />
+      return <RequestRow key={index} id={index} request={elem} address={this.props.address} approversCount={this.props.approversCount} />
     })
   }
 
